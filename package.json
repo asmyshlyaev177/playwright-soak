@@ -1,0 +1,49 @@
+{
+  "name": "playwright-soak",
+  "version": "0.1.0",
+  "description": "Soak-test Playwright flows for memory leaks. Repeat a user flow, force GC, assert that DOM nodes, listeners and heap growth do not accumulate.",
+  "keywords": [
+    "playwright",
+    "memory-leak",
+    "soak-test",
+    "memory",
+    "leak",
+    "cdp",
+    "testing",
+    "e2e"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "playwright test",
+    "prepack": "pnpm run build"
+  },
+  "peerDependencies": {
+    "@playwright/test": ">=1.30.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.10.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  },
+  "packageManager": "pnpm@9.15.0"
+}
