@@ -216,6 +216,23 @@ pnpm install
 pnpm run test:example
 ```
 
+## Agent skills
+
+The package ships three [TanStack Intent](https://tanstack.com/intent) skills
+in [skills/](./skills), so a coding agent reads how to use this rather than
+inferring it from the type signatures:
+
+| skill                  | covers                                                                                     |
+| ---------------------- | ------------------------------------------------------------------------------------------ |
+| `writing-soak-tests`   | wiring `attachCDP` and `soak` into a spec, sizing the loop, the Playwright config it needs |
+| `interpreting-results` | whether a red run is a real leak, and which threshold is load-bearing                      |
+| `typing-flows`         | calibrating and budgeting the nodes Chromium charges per editing gesture                   |
+
+If you use an agent, run `npx @tanstack/intent@latest install` once in your own
+project. It writes guidance into your agent's config telling it to discover and
+load skills from installed packages, so these arrive and update with the
+version of playwright-soak you have installed rather than with the model.
+
 ## Notes
 
 Garbage is collected **twice** before every reading. One pass intermittently
