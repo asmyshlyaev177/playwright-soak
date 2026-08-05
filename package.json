@@ -1,6 +1,6 @@
 {
   "name": "playwright-soak",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Catch memory leaks in Playwright tests. Repeat a user flow a few hundred times, force GC, and fail the test if DOM nodes, listeners or heap keep piling up.",
   "keywords": [
     "playwright",
