@@ -16,12 +16,12 @@
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.62.0",
+    "@playwright/test": "^1.62.1",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
-    "@vitejs/plugin-react": "^5.2.0",
+    "@vitejs/plugin-react": "^6.0.5",
     "playwright-soak": "workspace:*",
-    "typescript": "^5.7.2",
-    "vite": "^7.1.0"
+    "typescript": "^7.0.2",
+    "vite": "^8.2.0"
   }
 }
