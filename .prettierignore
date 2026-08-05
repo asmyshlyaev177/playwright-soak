@@ -1,0 +1,7 @@
+dist/
+coverage/
+test-results/
+playwright-report/
+pnpm-lock.yaml
+CHANGELOG.md
+examples/*/dist/

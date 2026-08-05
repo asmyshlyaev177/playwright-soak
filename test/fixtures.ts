@@ -70,6 +70,57 @@ export const LEAKS_HEAP_ONLY = shell(
 `,
 );
 
+/**
+ * Registers a listener on a node that stays put, and never removes it.
+ *
+ * Isolates the listener signal: no node churn, no documents, barely any heap.
+ * Each round passes a fresh closure, since re-registering the same function
+ * reference is a no-op.
+ */
+export const LEAKS_LISTENERS = shell(
+  `<div id="host"></div>`,
+  `
+  const host = document.getElementById('host');
+  window.round = () => {
+    host.addEventListener('click', () => void 0);
+  };
+`,
+);
+
+/**
+ * Registers one listener, once, when asked — and keeps it.
+ *
+ * This is the shape that must *not* count as a leak: a lazily initialised
+ * global steps the counter up and then holds flat, which is what a browser blip
+ * looks like too. The spec drives the step through the flow's iteration index.
+ */
+export const STEPS_ONCE = shell(
+  `<div id="host"></div>`,
+  `
+  const host = document.getElementById('host');
+  window.round = () => {};
+  window.addOneListener = () => host.addEventListener('click', () => void 0);
+`,
+);
+
+/**
+ * Mounts an iframe every round and leaves it in the document.
+ *
+ * A detached iframe would not do: Chromium tears its document down on removal,
+ * so `Documents` stays flat. Keeping them attached is what a widget that mounts
+ * a frame per open and never unmounts it actually does.
+ */
+export const LEAKS_DOCUMENTS = shell(
+  `<div id="host"></div>`,
+  `
+  window.round = () => {
+    const frame = document.createElement('iframe');
+    frame.style.display = 'none';
+    document.getElementById('host').appendChild(frame);
+  };
+`,
+);
+
 /** A page with a plain text input, for typing-cost calibration. */
 export const TYPING = shell(
   `<input id="field" /><div id="echo"></div>`,
@@ -83,9 +134,17 @@ export const TYPING = shell(
 
 export async function load(page: Page, html: string) {
   await page.setContent(html);
-  await page.waitForFunction(() => typeof (window as never as { round?: unknown }).round === 'function');
+  await page.waitForFunction(
+    () => typeof (window as never as { round?: unknown }).round === 'function',
+  );
 }
 
 /** Run one round of the fixture's own logic. */
 export const round = (page: Page) =>
   page.evaluate(() => (window as never as { round: () => void }).round());
+
+/** Trigger the one-off registration in {@link STEPS_ONCE}. */
+export const addOneListener = (page: Page) =>
+  page.evaluate(() =>
+    (window as never as { addOneListener: () => void }).addOneListener(),
+  );

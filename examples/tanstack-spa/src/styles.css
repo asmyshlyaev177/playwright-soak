@@ -1,0 +1,46 @@
+:root {
+  font-family: system-ui, sans-serif;
+  color-scheme: light dark;
+}
+
+body {
+  margin: 0;
+  padding: 1.5rem;
+}
+
+nav {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+nav a[aria-current='page'] {
+  font-weight: 700;
+}
+
+.lede {
+  margin-top: 0;
+  max-width: 62ch;
+  opacity: 0.75;
+}
+
+.panel {
+  border: 1px solid currentColor;
+  border-radius: 6px;
+  margin-top: 1rem;
+  padding: 0.75rem;
+}
+
+.rows {
+  display: grid;
+  gap: 0.25rem;
+  grid-template-columns: repeat(4, 1fr);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+label {
+  display: block;
+  margin-top: 0.75rem;
+}
