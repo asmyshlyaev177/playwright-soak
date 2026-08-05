@@ -42,7 +42,11 @@ jobs:
       - run: pnpm run format:check
       - run: pnpm run lint
       - run: pnpm run typecheck
-      - run: pnpm --filter example-tanstack typecheck
+
+      # Builds the package first: the example imports `playwright-soak` by name,
+      # which resolves through the workspace link to `dist/`. So this also
+      # checks the published types, not just the example's own source.
+      - run: pnpm run typecheck:example
 
   test:
     name: test

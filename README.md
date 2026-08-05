@@ -261,12 +261,20 @@ find out what is holding the memory.
 
 ```sh
 pnpm install
-pnpm run build          # tsup, ESM + CJS + d.ts
-pnpm run test           # the package's own fixtures
-pnpm run test:example   # builds the package, then the example app suite
+pnpm run build             # tsup, ESM + CJS + d.ts
+pnpm run test              # the package's own fixtures
+pnpm run test:example      # builds the package, then the example app suite
+pnpm run typecheck
+pnpm run typecheck:example # builds first: the example imports the built types
 pnpm run lint
 pnpm run format
 ```
+
+The two `:example` scripts build the package before running, because the example
+imports `playwright-soak` by name and resolves it through the workspace link to
+`dist/`. Running the underlying `pnpm --filter example-tanstack ...` directly
+works on your machine only for as long as a stale `dist/` happens to be lying
+around.
 
 Commits follow [Conventional Commits](https://www.conventionalcommits.org).
 semantic-release cuts the version and publishes from `master` through GitHub
